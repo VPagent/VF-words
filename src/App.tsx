@@ -1,11 +1,10 @@
 
-import './App.css';
+import { FC } from 'react';
+import ClientRoutes from './ClientRoutes';
 
-function App() {
+const App:FC = () => {
   return (
-    <div className="App">
-     
-    </div>
+    <ClientRoutes />
   );
 }
 
