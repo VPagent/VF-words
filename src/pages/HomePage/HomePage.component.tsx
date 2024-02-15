@@ -4,17 +4,23 @@ import LoginBox from '../../components/LoginBox';
 
 
 interface ComponentProps {
-    isShowLogin: boolean
+  isShowLogin: boolean,
+  navigate: (v:string) => void,
 }
 
 
 const HomePageComponent: FC<ComponentProps> = (props) => {
-  const { isShowLogin } = props;
+  const { isShowLogin, navigate} = props;
 
-    return <section>
+  
+
+    return (
+      <section>
         {isShowLogin && <LoginBox />}
-        
-  </section>;
+        <button onClick={() => navigate("account")}>Account</button>
+        <button onClick={() => navigate("tests")}>Tests</button>
+      </section>
+    );
 };
 
 

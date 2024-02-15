@@ -15,10 +15,10 @@ const ClientRoutes: FC = () => {
     return (
       <Routes>
         <Route path="/" element={<HomePagePage />}>
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/tests" element={<TestsPage />}>
-            <Route path="/test/:testId" element={<TestPage />} />
-            <Route path="/CreateTest" element={<CreateTestPage />} />
+          <Route path="account/" element={<AccountPage />} />
+          <Route path="tests/" element={<TestsPage />}>
+            <Route path="test/:testId" element={<TestPage />} />
+            <Route path="createTest" element={<CreateTestPage />} />
           </Route>
         </Route>
       </Routes>

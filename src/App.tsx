@@ -2,7 +2,8 @@
 import { FC } from 'react';
 import ClientRoutes from './ClientRoutes';
 
-const App:FC = () => {
+const App: FC = () => {
+  
   return (
     <ClientRoutes />
   );
