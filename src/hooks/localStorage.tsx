@@ -30,6 +30,7 @@ export const useLocalStorage = (): IUseLocalStorage => {
     setUserInfo(value);
   };
 
-    const methods = { userInfo, getStorageItem, setStorageItem };
+  const methods = { userInfo, getStorageItem, setStorageItem };
+  
   return methods;
 };

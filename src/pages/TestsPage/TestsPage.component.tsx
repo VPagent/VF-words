@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import styles from './TestsPage.module.scss'
 
 
@@ -8,10 +8,10 @@ const TestsPageComponent: FC = () => {
     
 
     return (
-        <section>
-
-        </section>
-    )
+        <>
+            TEst page Component
+        </>
+    );
 }
 
 
