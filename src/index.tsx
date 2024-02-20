@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <StorageProvider>
+      <StorageProvider baseName="VF-words/">
         <App />
       </StorageProvider>
     </BrowserRouter>
