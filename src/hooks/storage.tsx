@@ -4,9 +4,25 @@ import { userTestInitial } from "../constans";
 import { ITest } from "../globalTypes";
 
 
+interface IValues {
+  userName: string | null;
+  password: string | null;
+  tests: ITest[] | [];
+  changeUserName: (name:string) => void;
+  addNewTest: (test:ITest) => void;
+  setTests: (tests:ITest[]) => void;
+};
 
+const inValues: IValues = {
+  userName: null,
+  password: null,
+  tests: [],
+  changeUserName: () => {},
+  addNewTest: () => {},
+  setTests: () => {}
+};
 
-const StorageContext = createContext(userTestInitial);
+const StorageContext = createContext(inValues);
 
 export const StorageProvider: any = ({ children }: any) => {
 
@@ -14,7 +30,7 @@ export const StorageProvider: any = ({ children }: any) => {
 
   const [userName, setUserName] = useState<string | null>(userInfo?.userName || null);
   const [password, setPassword] = useState<string | null>(userInfo?.password || null);
-  const [tests, setTests] = useState<ITest[] | null>(userInfo?.tests || null);
+  const [tests, setTests] = useState<ITest[] | []>(userInfo?.tests || []);
   const [words, setWords] = useState<any[] | null>(userInfo?.words || null);
   const [theme, setTheme] = useState<string>(userInfo?.theme);
     
@@ -29,10 +45,9 @@ export const StorageProvider: any = ({ children }: any) => {
   };
 
 
-    useEffect(() => {
-        if (userInfo?.userName == null) {
-            setStorageItem(user);
-      }
+  useEffect(() => {
+    setStorageItem(user);
+
   }, [userName, password, tests, words, theme]);
 
   const changeUserName = (name: string) => {
@@ -52,11 +67,12 @@ export const StorageProvider: any = ({ children }: any) => {
   const values = {
     userName,
     password,
+    tests,
     changeUserName,
-    addNewTest
+    addNewTest,
+    setTests
   };
     return (
-      //@ts-ignore
       <StorageContext.Provider value={values}>{children}</StorageContext.Provider>
   );
 };

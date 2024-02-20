@@ -5,22 +5,12 @@ import { IUseLocalStorage } from "./types";
 
 
 export const useLocalStorage = (): IUseLocalStorage => {
-  const [userInfo, setUserInfo] = useState<any | null>(null);
+  const [userInfo, setUserInfo] = useState<any | null>(JSON.parse(localStorage.getItem(LocalStorageKey.USER) as any) || userTestInitial);
 
   useEffect(() => {
-    if (localStorage.getItem(LocalStorageKey.USER) == null) {
-      localStorage.setItem(
-        LocalStorageKey.USER,
-        JSON.stringify(userTestInitial)
-      );
-      return;
-    }
-    if (userInfo != null) {
-      console.log("wright");
-      localStorage.setItem(LocalStorageKey.USER, JSON.stringify(userInfo));
-      return;
-    }
-  }, [userInfo, setUserInfo]);
+    localStorage.setItem(LocalStorageKey.USER, JSON.stringify(userInfo));
+    
+  }, [userInfo])
 
   const getStorageItem = (): any => {
     return userInfo;

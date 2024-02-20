@@ -12,3 +12,9 @@ export interface ITest {
   statistic?: any;
   variant?: string;
 }
+
+export enum TestsModes {
+  EDIT = "edit",
+  PLAY = "play",
+  READ = "read"
+}
