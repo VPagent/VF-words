@@ -10,8 +10,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <StorageProvider basename="VF-words/">
+    <BrowserRouter basename="VF-words/">
+      <StorageProvider>
         <App />
       </StorageProvider>
     </BrowserRouter>
