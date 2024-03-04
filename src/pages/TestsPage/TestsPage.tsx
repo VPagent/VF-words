@@ -1,22 +1,20 @@
-import { FC, useState } from "react";
+import EditComponent from "./components/Edit/Edit.component";
 import TestsPageComponent from "./TestsPage.component";
 import useStorageContext from "../../hooks/storage";
-import { TestsModes } from "../../globalTypes";
-import EditComponent from "./components/Edit.component";
-import PlayComponent from "./components/Play.component";
-import { Form } from "antd";
+import PlayPage from "./components/Play/PlayPage";
+import { TestsModes, TestsVariants } from "../../globalTypes";
+import { FC, useState } from "react";
 import { nanoid } from "nanoid";
-
+import { Form } from "antd";
 
 
 const TestsPage: FC = () => {
   const [whatsMode, setWhatsMode] = useState<{ id: string | null, mode: TestsModes }>({ id: null, mode: TestsModes.READ });
-  const { tests, setTests } = useStorageContext();
+  const { tests, setTests, setNewStatistic } = useStorageContext();
   const [form] = Form.useForm();
   const { getFieldsValue, resetFields } = form;
   const currentTest = whatsMode.id != null ? tests.find((test) => test.id === whatsMode.id ? test : null) : null;
   const [wordsCount, setWordsCount] = useState<number[] | null>(null);
-
 
 
   const startPlayMode = (id:string) => {
@@ -43,6 +41,28 @@ const TestsPage: FC = () => {
     setWhatsMode({id: null, mode:TestsModes.READ})
   }
 
+  // const scrollToBottom = () => {
+  //   //@ts-ignore
+  //   // document.body.scrollIntoView({ behavior: 'smooth' });
+  //   root.scrollIntoView({ behavior: "smooth" });
+  //   console.dir(document);
+  // }
+
+  const onChangeTestState = (testId:string) => {
+    const newTests = tests.map((test) => {
+      if (test.id === testId) {
+        return {
+          ...test,
+          state: test.state === TestsVariants.HIDDEN ? TestsVariants.READ : TestsVariants.HIDDEN
+        }
+      } else {
+        return test
+      }
+    })
+
+    setTests(newTests);
+  }
+
   const deleteTranslate = (id: string, trans: string) => {
     if (currentTest != null) {
       const currentWord = currentTest.words.find((word) => word.id === id);
@@ -63,6 +83,7 @@ const TestsPage: FC = () => {
     } else {
       setWordsCount([1]);
     }
+    // scrollToBottom();
   }
 
   const onSave = () => {
@@ -72,27 +93,28 @@ const TestsPage: FC = () => {
       //@ts-ignore
       const arrayCounter = new Array(currentTest.words.length + (wordsCount?.length ? wordsCount?.length : 0)).fill(1);
       const newWords = arrayCounter?.map((item, index) => {
+
         const test1 = `word${index + 1}`;
         const test2 = `wordTr${index + 1}`;
-        
-        if (allValues[test1] != null && allValues[test2] != null) {
-          
-          const newWord = {
+   
+          return {
             id: nanoid(),
             wordEng: allValues[test1],
             wordTr: allValues[test2]
           };
-          return newWord;
-        } else {
-          return null;
-        }
+
+      });
+
+      const nextWords = newWords.filter((word) => {
+        return word.wordEng != null
       });
 
       const nextTest = {
         ...currentTest,
         name: allValues.name,
-        words: newWords
-      }
+        words: nextWords,
+        state: currentTest.state != null ? currentTest.state : TestsVariants.HIDDEN
+      };
 
       const filteredTests = tests.filter((test) => test.id !== currentTest.id);
       const result = [...filteredTests, nextTest];
@@ -116,7 +138,8 @@ const TestsPage: FC = () => {
             startPlayMode,
             stopPlayMode,
             putEditMode,
-            deleteTest
+            deleteTest,
+            onChangeTestState
           }}
         />
       )}
@@ -131,12 +154,14 @@ const TestsPage: FC = () => {
             deleteTranslate,
             wordsCount,
             addNewWord,
-            onSave
+            onSave,
           }}
         />
       )}
       {whatsMode.mode === TestsModes.PLAY && currentTest != null && (
-        <PlayComponent {...{ whatsMode, currentTest, turnToReadMode }} />
+        <PlayPage
+          {...{ whatsMode, currentTest, turnToReadMode, setNewStatistic }}
+        />
       )}
     </>
   );

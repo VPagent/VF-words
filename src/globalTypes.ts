@@ -11,10 +11,16 @@ export interface ITest {
   wordsCount?: number;
   statistic?: any;
   variant?: string;
+  state?: TestsVariants;
 }
 
 export enum TestsModes {
   EDIT = "edit",
   PLAY = "play",
   READ = "read"
+}
+
+export enum TestsVariants {
+  READ = "read",
+  HIDDEN = "hidden"
 }

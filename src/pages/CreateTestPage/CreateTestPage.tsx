@@ -3,6 +3,7 @@ import CreateTestPageComponent from "./CreateTestPage.component";
 import useStorageContext from "../../hooks/storage";
 import { Button, Form, Input, Radio } from "antd";
 import { nanoid } from "nanoid";
+import { TestsVariants } from "../../globalTypes";
 
 
 const CreateTestPage: FC = () => {
@@ -26,13 +27,22 @@ const CreateTestPage: FC = () => {
       return newWord;
     })
 
+    currentWords.forEach((word) => {
+      if (word == null) {
+        return
+      } else {
+        return word
+      }
+    })
+
     const test = {
       name: getFieldValue("name"),
       id: nanoid(),
       words: currentWords,
       wordsCount: currentWords.length,
       statistic: null,
-      variant: "word"
+      variant: "word",
+      state: TestsVariants.HIDDEN
     };
     addNewTest(test);
     resetFields();

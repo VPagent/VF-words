@@ -8,9 +8,10 @@ interface IValues {
   userName: string | null;
   password: string | null;
   tests: ITest[] | [];
-  changeUserName: (name:string) => void;
-  addNewTest: (test:ITest) => void;
-  setTests: (tests:ITest[]) => void;
+  changeUserName: (name: string) => void;
+  addNewTest: (test: ITest) => void;
+  setTests: (tests: ITest[]) => void;
+  setNewStatistic: (testId:string, stat:number) => void;
 };
 
 const inValues: IValues = {
@@ -19,7 +20,8 @@ const inValues: IValues = {
   tests: [],
   changeUserName: () => {},
   addNewTest: () => {},
-  setTests: () => {}
+  setTests: () => { },
+  setNewStatistic: () => {}
 };
 
 const StorageContext = createContext(inValues);
@@ -64,13 +66,31 @@ export const StorageProvider: any = ({ children }: any) => {
       setTests([test]);
     }
   };
+
+  const setNewStatistic = (testId: string, statisticData:number) => {
+
+    const newTests = tests.map((test) => {
+      if (test.id === testId) {
+        return {
+          ...test,
+          statistic: statisticData
+        }
+      } else {
+        return test;
+      }
+    })
+
+    setTests(newTests);
+  }
+
   const values = {
     userName,
     password,
     tests,
     changeUserName,
     addNewTest,
-    setTests
+    setTests,
+    setNewStatistic
   };
     return (
       <StorageContext.Provider value={values}>{children}</StorageContext.Provider>
