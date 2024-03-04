@@ -90,7 +90,7 @@ const PlayPage: FC<ComponentProps> = (props) => {
         }
       });
 
-      const treeFakeTranslations = allTranslations.splice(0, 3);
+      const treeFakeTranslations = allTranslations.splice(0, 6);
       const allTranslationsNeedDisplay = [
         ...treeFakeTranslations,
         trulyTrans[trulyTransIndexes[0]]
