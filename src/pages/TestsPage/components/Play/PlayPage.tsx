@@ -3,6 +3,7 @@ import PlayComponent from "./Play.component";
 import { ITest } from "../../../../globalTypes";
 import _ from "lodash";
 import { findPercentage } from "../../../../utils/utils";
+import { toast } from "react-toastify";
 
 interface ComponentProps {
   currentTest: ITest | null;
@@ -29,6 +30,10 @@ const PlayPage: FC<ComponentProps> = (props) => {
 
   const { wordEng } = currentDisplayedWord;
 
+  const notifyTrue = () => toast.success("Right");
+  const notifyFalse = () => toast.error("False");
+
+
   const toRandomTestWords = (words: any[]) => {
     const indexes: any[] = [];
     words.forEach((_, index) => indexes.push(index));
@@ -40,6 +45,7 @@ const PlayPage: FC<ComponentProps> = (props) => {
   const toNextStep = () => {
     if (words && words?.length > 0) {
       if (step === words?.length) {
+        setStep(step + 1);
         return;
       }
       setTestWordIndexes(testWordsIndexes.filter((_, index) => index !== 0));
@@ -49,6 +55,7 @@ const PlayPage: FC<ComponentProps> = (props) => {
 
   const onTransClick = (translation: string) => {
     if (trulyTrans.includes(translation)) {
+      notifyTrue();
       setTestStatistic((testStatistic + 1));
     } 
 
@@ -106,9 +113,9 @@ const PlayPage: FC<ComponentProps> = (props) => {
   }, [words, currentDisplayedWord]);
 
   useEffect(() => {
-    if (step === words?.length && currentTest != null) {
+    if (step - 1 === words?.length) {
       const per = findPercentage(words.length, testStatistic);
-      setNewStatistic(currentTest?.id, per);
+      setNewStatistic(currentTest!.id, per);
       turnToReadMode();
     }
 
