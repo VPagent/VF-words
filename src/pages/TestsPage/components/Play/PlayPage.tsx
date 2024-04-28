@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import PlayComponent from "./Play.component";
-import { ITest } from "../../../../globalTypes";
+import { ITest, PlayVariants } from "../../../../globalTypes";
 import _ from "lodash";
 import { findPercentage } from "../../../../utils/utils";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ interface ComponentProps {
 
 const PlayPage: FC<ComponentProps> = (props) => {
   const { currentTest, turnToReadMode, setNewStatistic } = props;
+  const [variant, setVariant] = useState<PlayVariants | null>(null);
 
   const words = currentTest?.words;
 
@@ -30,15 +31,20 @@ const PlayPage: FC<ComponentProps> = (props) => {
 
   const { wordEng } = currentDisplayedWord;
 
+  //OtherTO ENG
+  const [wordsText, setWordsText] = useState<string[] | null>(null);
+
   const notifyTrue = () => toast.success("Right");
   const notifyFalse = () => toast.error("False");
-
 
   const toRandomTestWords = (words: any[]) => {
     const indexes: any[] = [];
     words.forEach((_, index) => indexes.push(index));
     const randomIndexes = _.sampleSize(indexes, indexes.length);
 
+    const newTextWords = words.map((word) => word);
+    
+    setWordsText(newTextWords);
     setTestWordIndexes(randomIndexes);
   };
 
@@ -56,10 +62,16 @@ const PlayPage: FC<ComponentProps> = (props) => {
   const onTransClick = (translation: string) => {
     if (trulyTrans.includes(translation)) {
       notifyTrue();
-      setTestStatistic((testStatistic + 1));
-    } 
+      setTestStatistic(testStatistic + 1);
+    } else {
+      notifyFalse();
+    }
 
     toNextStep();
+  };
+
+  const onChangePlayVariant = (event: any) => {
+    setVariant(event.currentTarget.name);
   };
 
   useEffect(() => {
@@ -67,21 +79,28 @@ const PlayPage: FC<ComponentProps> = (props) => {
       toRandomTestWords(words);
     }
   }, []);
-  
-
 
   useEffect(() => {
     if (testWordsIndexes.length > 0 && words && words.length > 0) {
-      const indexOfCurrentWord = testWordsIndexes[0];
-      const currentWord = words[indexOfCurrentWord];
-      const ArrayOfTranslations = currentWord.wordTr.split(", ");
-      const indexes: any[] = [];
 
-      ArrayOfTranslations.forEach((_: any, index: any) => indexes.push(index));
+        const indexOfCurrentWord = testWordsIndexes[0];
+        const currentWord = words[indexOfCurrentWord];
+        const ArrayOfTranslations = currentWord.wordTr.split(", ");
+        const indexes: any[] = [];
 
-      setCurrentDisplayedWord(currentWord);
-      setTrulyTrans(ArrayOfTranslations);
-      setTrulyTransIndexes(_.sampleSize(indexes, indexes.length));
+        ArrayOfTranslations.forEach((_: any, index: any) =>
+          indexes.push(index)
+        );
+
+        setCurrentDisplayedWord(currentWord);
+        setTrulyTrans(ArrayOfTranslations);
+        setTrulyTransIndexes(_.sampleSize(indexes, indexes.length));
+
+      if (variant === PlayVariants.OTHERTOENG) {
+        const indexOfCurrentWord = testWordsIndexes[0];
+        const currentWord = words[indexOfCurrentWord];
+        
+      }
     }
   }, [testWordsIndexes]);
 
@@ -118,16 +137,17 @@ const PlayPage: FC<ComponentProps> = (props) => {
       setNewStatistic(currentTest!.id, per);
       turnToReadMode();
     }
-
-  }, [step, testStatistic])
+  }, [step, testStatistic]);
 
   return (
     <PlayComponent
       {...{
+        variant,
         wordEng,
         allTranslationsToDisplay,
         turnToReadMode,
-        onTransClick
+        onTransClick,
+        onChangePlayVariant
       }}
     />
   );

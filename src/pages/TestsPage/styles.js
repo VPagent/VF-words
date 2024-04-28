@@ -23,12 +23,12 @@ export const styles = {
   },
 
   testReadEngWord: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold"
   },
   testReadTrans: {
-    marginLeft:20,
-    fontSize: 20,
+    marginLeft:12,
+    fontSize: 16,
   },
   testReadFlexDiv: {
     display: "flex",

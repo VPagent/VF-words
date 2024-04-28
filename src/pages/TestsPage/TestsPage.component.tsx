@@ -1,8 +1,8 @@
+import { CaretUpOutlined, CaretDownOutlined, RetweetOutlined } from "@ant-design/icons";
+import { TestsVariants } from "../../globalTypes";
+import { Button, Card } from "antd";
 import React, { FC } from "react";
 import { styles } from "./styles";
-import { Button, Card } from "antd";
-import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
-import { TestsVariants } from "../../globalTypes";
 
 interface ComponentProps {
   tests: any;
@@ -10,11 +10,12 @@ interface ComponentProps {
   putEditMode: any;
   deleteTest: any;
   onChangeTestState: (testId: string) => void;
+  randomWordsInTest: (testId: string) => void;
 }
 
 const TestsPageComponent: FC<ComponentProps> = (props) => {
-  const { tests, startPlayMode, putEditMode, deleteTest, onChangeTestState } =
-    props;
+  const { tests, startPlayMode, putEditMode, deleteTest, onChangeTestState, randomWordsInTest } = props;
+
   return (
     <>
       <h2>Tests</h2>
@@ -24,6 +25,7 @@ const TestsPageComponent: FC<ComponentProps> = (props) => {
             <div style={styles.flexDiv}>
               {test.statistic && <p>Statistic - {test.statistic}%</p>}
               {test.words != null && <p>Words - {test.words.length}</p>}
+              <Button onClick={() => randomWordsInTest(test.id)}><RetweetOutlined /></Button>
               <Button onClick={() => onChangeTestState(test.id)}>
                 {test.state === TestsVariants.READ ? (
                   <CaretUpOutlined />
@@ -39,7 +41,7 @@ const TestsPageComponent: FC<ComponentProps> = (props) => {
                 return (
                   word != null && (
                     <div key={word.id} style={styles.testReadFlexDiv}>
-                      <p style={styles.testReadEngWord}>{word.wordEng} -- </p>
+                      <p style={styles.testReadEngWord}>{word.wordEng} - </p>
                       <p style={styles.testReadTrans}>{word.wordTr}</p>
                     </div>
                   )

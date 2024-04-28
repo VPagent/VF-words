@@ -24,3 +24,8 @@ export enum TestsVariants {
   READ = "read",
   HIDDEN = "hidden"
 }
+
+export enum PlayVariants {
+  OTHERTOENG = "otherToEng",
+  ENGTOOTHER = "engToOther"
+}

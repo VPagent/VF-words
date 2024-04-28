@@ -1,11 +1,13 @@
+import { TestsModes, TestsVariants } from "../../globalTypes";
 import EditComponent from "./components/Edit/Edit.component";
 import TestsPageComponent from "./TestsPage.component";
 import useStorageContext from "../../hooks/storage";
 import PlayPage from "./components/Play/PlayPage";
-import { TestsModes, TestsVariants } from "../../globalTypes";
 import { FC, useState } from "react";
 import { nanoid } from "nanoid";
 import { Form } from "antd";
+import _ from "lodash";
+
 
 
 const TestsPage: FC = () => {
@@ -35,6 +37,20 @@ const TestsPage: FC = () => {
       setTests(deletedTests);
       
     }
+  }
+
+  const randomWordsInTest = (testId: string) => {
+    const newTests = tests.map((test) => {
+      if (testId === test.id) {
+        const newWordsRandom = _.sampleSize(test.words, test.words.length);
+        return {
+          ...test,
+          words: newWordsRandom
+        };
+      }
+      return test
+    })
+    setTests(newTests);
   }
 
   const turnToReadMode = () => {
@@ -139,7 +155,8 @@ const TestsPage: FC = () => {
             stopPlayMode,
             putEditMode,
             deleteTest,
-            onChangeTestState
+            onChangeTestState,
+            randomWordsInTest
           }}
         />
       )}
@@ -154,7 +171,7 @@ const TestsPage: FC = () => {
             deleteTranslate,
             wordsCount,
             addNewWord,
-            onSave,
+            onSave
           }}
         />
       )}

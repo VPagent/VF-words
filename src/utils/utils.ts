@@ -20,8 +20,6 @@ export const firstSymbolFormatter = (string: string): string => {
 export const findPercentage = (allNum: number, trulyNum: number): number => {
     
   const percent = (100 * trulyNum) / allNum;
-  
-  console.log("percent", percent);
 
   return percent;
 }
