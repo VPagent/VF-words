@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/VF-words/static/css/main.12d3b70f.css",
-    "main.js": "/VF-words/static/js/main.ff0c9c7b.js",
+    "main.js": "/VF-words/static/js/main.5874007c.js",
     "index.html": "/VF-words/index.html",
     "main.12d3b70f.css.map": "/VF-words/static/css/main.12d3b70f.css.map",
-    "main.ff0c9c7b.js.map": "/VF-words/static/js/main.ff0c9c7b.js.map"
+    "main.5874007c.js.map": "/VF-words/static/js/main.5874007c.js.map"
   },
   "entrypoints": [
     "static/css/main.12d3b70f.css",
-    "static/js/main.ff0c9c7b.js"
+    "static/js/main.5874007c.js"
   ]
 }
