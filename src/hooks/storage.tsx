@@ -73,7 +73,7 @@ export const StorageProvider: any = ({ children }: any) => {
       if (test.id === testId) {
         return {
           ...test,
-          statistic: statisticData
+          statistic: statisticData.toFixed()
         }
       } else {
         return test;
