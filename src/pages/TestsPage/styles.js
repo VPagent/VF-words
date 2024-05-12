@@ -4,8 +4,18 @@ export const styles = {
     justifyContent: "space-between",
     alignItems: "center"
   },
+  flexDirCol: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    "flex-direction": "column"
+  },
   card: {
     marginTop: 20
+  },
+  testInfoText: {
+    marginTop: 6,
+    marginBottom:6
   },
   mainEngWord: {
     display: "flex",
@@ -27,11 +37,21 @@ export const styles = {
     fontWeight: "bold"
   },
   testReadTrans: {
-    marginLeft:12,
-    fontSize: 16,
+    marginTop: 10,
+    fontSize: 16
   },
   testReadFlexDiv: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    "flex-direction": "column",
+    backgroundColor: "#fdfafa",
+    borderRadius: 10,
+    marginTop: 10
   },
+  bottomControllers: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10
+  }
 };

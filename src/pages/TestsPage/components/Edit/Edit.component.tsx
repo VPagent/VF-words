@@ -17,7 +17,7 @@ const EditComponent: FC<ComponentProps> = (props) => {
   const { whatsMode, currentTest, form, turnToReadMode, wordsCount } = props;
   const { addNewWord, onSave } = props;
   const words = currentTest?.words;
-  console.log("wordCount Lengt", wordsCount?.length, words?.length);
+
   return (
     <>
       <Button onClick={turnToReadMode}>{"<Back"}</Button>

@@ -121,9 +121,7 @@ const TestsPage: FC = () => {
 
       });
 
-      const nextWords = newWords.filter((word) => {
-        return word.wordEng != null
-      });
+      const nextWords = newWords.filter((word) => word.wordEng);
 
       const nextTest = {
         ...currentTest,

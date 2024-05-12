@@ -14,25 +14,39 @@ interface ComponentProps {
 }
 
 const TestsPageComponent: FC<ComponentProps> = (props) => {
-  const { tests, startPlayMode, putEditMode, deleteTest, onChangeTestState, randomWordsInTest } = props;
+  const { tests, startPlayMode, putEditMode, deleteTest } = props;
+  const { onChangeTestState, randomWordsInTest } = props;
 
   return (
     <>
       <h2>Tests</h2>
       {tests.length > 0 &&
         tests.map((test: any) => (
-          <Card key={test.id} title={test.name} size="default" style={styles.card}>
+          <Card
+            key={test.id}
+            title={test.name}
+            size="default"
+            style={styles.card}
+          >
             <div style={styles.flexDiv}>
-              {test.statistic && <p>Statistic - {test.statistic}%</p>}
-              {test.words != null && <p>Words - {test.words.length}</p>}
-              <Button onClick={() => randomWordsInTest(test.id)}><RetweetOutlined /></Button>
-              <Button onClick={() => onChangeTestState(test.id)}>
-                {test.state === TestsVariants.READ ? (
-                  <CaretUpOutlined />
-                ) : (
-                  <CaretDownOutlined />
+              <div style={styles.flexDirCol}>
+                {test.statistic && (
+                  <p style={styles.testInfoText}>Statistic - {test.statistic}%</p>
                 )}
-              </Button>
+                {test.words != null && <p style={styles.testInfoText}>Words - {test.words.length}</p>}
+              </div>
+              <div>
+                <Button onClick={() => randomWordsInTest(test.id)}>
+                  <RetweetOutlined />
+                </Button>
+                <Button onClick={() => onChangeTestState(test.id)}>
+                  {test.state === TestsVariants.READ ? (
+                    <CaretUpOutlined />
+                  ) : (
+                    <CaretDownOutlined />
+                  )}
+                </Button>
+              </div>
             </div>
 
             {test.words &&
@@ -41,17 +55,19 @@ const TestsPageComponent: FC<ComponentProps> = (props) => {
                 return (
                   word != null && (
                     <div key={word.id} style={styles.testReadFlexDiv}>
-                      <p style={styles.testReadEngWord}>{word.wordEng} - </p>
+                      <p style={styles.testReadEngWord}>{word.wordEng}</p>
                       <p style={styles.testReadTrans}>{word.wordTr}</p>
                     </div>
                   )
                 );
               })}
-            <Button onClick={() => startPlayMode(test.id)}>Play</Button>
-            <Button onClick={() => deleteTest(test.id)} disabled>
-              Delete
-            </Button>
-            <Button onClick={() => putEditMode(test.id)}>Edit</Button>
+            <div style={styles.bottomControllers}>
+              <Button onClick={() => startPlayMode(test.id)}>Play</Button>
+              <Button onClick={() => deleteTest(test.id)} disabled>
+                Delete
+              </Button>
+              <Button onClick={() => putEditMode(test.id)}>Edit</Button>
+            </div>
           </Card>
         ))}
     </>
